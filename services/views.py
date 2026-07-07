@@ -10,6 +10,9 @@ from .models import ConnectedService
 from django.core import signing
 from django.contrib.auth.models import User
 import secrets
+from django.utils import timezone
+import requests
+from .utils import validate_token
 
 
 # Views
@@ -102,11 +105,12 @@ def google_callback(request):
     )
 
     account_email = id_info["email"]
-
+    print(credentials.expiry.tzinfo)
     ConnectedService.objects.create(
         name="google",
         account_email=account_email,
         access_token=access_token,
+        access_expiry=timezone.make_aware(credentials.expiry),
         refresh_token=refresh_token,
         user=user,
     )
@@ -119,11 +123,15 @@ def google_callback(request):
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def google_files(request):
-    user = request.user
-    connection = ConnectedService.objects.get(user=user, name="google")
-    access_token = connection.access_token
 
-    import requests
+    user = request.user
+
+    try:
+        cs = ConnectedService.objects.get(user=user, name="google")
+    except ConnectedService.DoesNotExist:
+        return Response({"error": "Service Not Found!"}, status=404)
+
+    access_token = validate_token(cs)
 
     response = requests.get(
         "https://www.googleapis.com/drive/v3/files",

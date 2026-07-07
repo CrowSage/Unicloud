@@ -12,6 +12,8 @@ class ConnectedService(models.Model):
     name = models.CharField(choices=NAME_CHOICES, default="google")
     account_email = models.CharField(max_length=255)
     access_token = models.TextField()
+    access_expiry = models.DateTimeField()
+
     refresh_token = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
