@@ -10,7 +10,7 @@ class ConnectedService(models.Model):
     ]
 
     name = models.CharField(choices=NAME_CHOICES, default="google")
-    account_email = models.CharField(max_length=255)
+    account_id = models.CharField(max_length=255)
     access_token = models.TextField()
     access_expiry = models.DateTimeField()
 

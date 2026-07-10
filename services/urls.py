@@ -7,4 +7,5 @@ urlpatterns = [
     path("google/files/", views.google_files),
     path("dropbox/connect/", views.dropbox_connect),
     path("dropbox/callback/", views.dropbox_callback),
+    path("dropbox/files/", views.dropbox_files),
 ]

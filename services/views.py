@@ -108,12 +108,12 @@ def google_callback(request):
         settings.GOOGLE_CLIENT_ID,
     )
 
-    account_email = id_info["email"]
+    account_id = id_info["email"]
     print(credentials.expiry.tzinfo)
     ConnectedService.objects.update_or_create(
         user=user,
         name="google",
-        account_email=account_email,
+        account_id=account_id,
         defaults={
             "access_token": access_token,
             "access_expiry": timezone.make_aware(credentials.expiry),
@@ -122,7 +122,7 @@ def google_callback(request):
     )
 
     return Response(
-        {"message": "Google account connected successfully", "email": account_email}
+        {"message": "Google account connected successfully", "email": account_id}
     )
 
 
@@ -131,9 +131,12 @@ def google_callback(request):
 def google_files(request):
 
     user = request.user
+    account_id = request.GET.get("account_id")
 
     try:
-        cs = ConnectedService.objects.get(user=user, name="google")
+        cs = ConnectedService.objects.get(
+            user=user, name="google", account_id=account_id
+        )
     except ConnectedService.DoesNotExist:
         return Response({"error": "Service Not Found!"}, status=404)
 
@@ -227,8 +230,8 @@ def dropbox_callback(request):
 
     ConnectedService.objects.update_or_create(
         user=user,
-        name="google",
-        account_email=account_id,
+        name="dropbox",
+        account_id=account_id,
         defaults={
             "access_token": access_token,
             "access_expiry": access_expiry,
@@ -239,3 +242,32 @@ def dropbox_callback(request):
     return Response(
         {"message": "Dropbox account connected successfully", "account_id": account_id}
     )
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def dropbox_files(request):
+
+    user = request.user
+    account_id = request.GET.get("account_id")
+
+    try:
+        cs = ConnectedService.objects.get(
+            user=user, account_id=account_id, name="dropbox"
+        )
+    except ConnectedService.DoesNotExist:
+        return Response({"error": "Service Not Found"}, status=404)
+
+    access_token = validate_token(cs)
+
+    url = "https://api.dropboxapi.com/2/files/list_folder"
+    headers = {
+        "Authorization": f"Bearer {access_token}",
+        "Content-Type": "application/json",
+    }
+
+    data = {"path": ""}
+
+    response = requests.post(url, headers=headers, json=data)
+
+    return Response(response.json())

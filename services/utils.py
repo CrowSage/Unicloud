@@ -8,10 +8,16 @@ def validate_token(connected_service):
 
     if connected_service.access_expiry < timezone.now() + timedelta(seconds=60):
 
-        url = "https://oauth2.googleapis.com/token"
+        service_name = connected_service.name.upper()
+
+        if service_name == "GOOGLE":
+            url = "https://oauth2.googleapis.com/token"
+        elif service_name == "DROPBOX":
+            url = "https://api.dropboxapi.com/oauth2/token"
+
         payload = {
-            "client_id": settings.GOOGLE_CLIENT_ID,
-            "client_secret": settings.GOOGLE_CLIENT_SECRET,
+            "client_id": getattr(settings, f"{service_name}_CLIENT_ID"),
+            "client_secret": getattr(settings, f"{service_name}_CLIENT_SECRET"),
             "refresh_token": connected_service.refresh_token,
             "grant_type": "refresh_token",
         }
@@ -19,7 +25,7 @@ def validate_token(connected_service):
         response = requests.post(url=url, data=payload)
 
         if response.status_code != 200:
-            raise Exception("Google refresh token invalid, reconnect required")
+            raise Exception(f"{service_name} refresh token invalid, reconnect required")
 
         data = response.json()
 
