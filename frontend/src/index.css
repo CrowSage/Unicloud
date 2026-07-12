@@ -1,0 +1,26 @@
+:root {
+    --bg: hsl(0, 0%, 5%);
+    --fg: hsl(0, 0%, 95%);
+    --accent: hsl(217 91% 60%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+
+body {
+    background-color: var(--bg);
+    color: var(--fg);
+
+    font-family: "Motiva Sans";
+}
+
+h1 {
+    font-weight: 500;
+    letter-spacing: -1%;
+    line-height: 100%;
+}

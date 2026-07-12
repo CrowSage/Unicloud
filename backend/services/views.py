@@ -17,9 +17,20 @@ from urllib.parse import urlencode
 import hashlib
 import base64
 from datetime import timedelta
+from .serializers import ConnectedServiceSerializer
 
 
 # Views
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def list_connected_services(request):
+
+    connected_services = ConnectedService.objects.filter(user=request.user)
+    serializer = ConnectedServiceSerializer(connected_services, many=True)
+
+    return Response({"services": serializer.data})
+
+
 @api_view(["GET"])
 @permission_classes([IsAuthenticated])
 def google_connect(request):
