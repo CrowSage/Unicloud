@@ -1,3 +1,11 @@
+@font-face {
+    font-family: "Recia";
+    src: 
+        url("./assets/Recia-Variable.woff2") format("woff2"),
+        url("./assets/Recia-Variable.woff") format("woff");
+    }
+
+
 :root {
     --bg: hsl(0, 0%, 5%);
     --fg: hsl(0, 0%, 95%);
@@ -9,6 +17,7 @@
     padding: 0;
 
     box-sizing: border-box;
+    font-family: "Recia";
 }
 
 
@@ -16,11 +25,57 @@ body {
     background-color: var(--bg);
     color: var(--fg);
 
-    font-family: "Motiva Sans";
+    
 }
 
 h1 {
     font-weight: 500;
     letter-spacing: -1%;
     line-height: 100%;
+}
+/* Form CSS */
+.authFormContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    width: 100vw;
+    height: 70vh;
+}
+
+.authForm{
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+    margin-top: 50px;
+
+}
+.authForm input{
+    background-color: transparent;
+    color: var(--fg);
+
+    font-size: 16px;
+
+    padding: 4px 8px;
+
+    border: 1px solid var(--accent);
+    border-radius: 4px;
+}
+.authForm button{
+    background-color: var(--accent);
+    color: var(--fg);
+
+    border: 1px solid gray;
+    border-radius: 4px;
+    
+    
+    font-size: 16px;
+
+    margin-top: 20px;
+
+    padding: 4px 8px;
+
+    cursor: pointer;
 }
