@@ -9,7 +9,8 @@
 :root {
     --bg: hsl(0, 0%, 5%);
     --fg: hsl(0, 0%, 95%);
-    --accent: hsl(217 91% 60%);
+    --accent: hsl(217 91% 25%);
+    --border: hsl(0, 0%, 50%);
 }
 
 * {
@@ -48,7 +49,9 @@ h1 {
     display: flex;
     flex-direction: column;
 
-    gap: 4px;
+    width: 320px;
+
+    gap: 8px;
     margin-top: 50px;
 
 }
@@ -56,26 +59,33 @@ h1 {
     background-color: transparent;
     color: var(--fg);
 
-    font-size: 16px;
+    font-size: 18px;
 
     padding: 4px 8px;
 
     border: 1px solid var(--accent);
     border-radius: 4px;
+
+    margin-top: 20px;
 }
 .authForm button{
     background-color: var(--accent);
     color: var(--fg);
 
-    border: 1px solid gray;
+    border: 1px solid var(--border);
     border-radius: 4px;
-    
-    
-    font-size: 16px;
+
+
+    font-size: 18px;
 
     margin-top: 20px;
-
     padding: 4px 8px;
 
     cursor: pointer;
+}
+.inputError{
+    color: hsl(0, 79%, 51%);
+    font-size: 14px;
+    padding: 0px 5px;
+
 }

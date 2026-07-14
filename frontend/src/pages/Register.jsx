@@ -23,7 +23,7 @@ export default function Register() {
 
     setUsernameError("")
     setPasswordError("")
-
+    setConfirmPassword("")
 
     let hasErrors = false
 
@@ -50,13 +50,12 @@ export default function Register() {
 
     <div className="authFormContainer">
       <h1>Register</h1>
-      <span style={{fontSize:"14px", color:"gray", marginTop: "16px"}}>Become a part of our kingdom.</span>
-
+      <span style={{fontSize:"16px", color:"gray", marginTop: "16px"}}>Become a part of our kingdom.</span>
       <form className="authForm" onSubmit={handleSubmit}>
 
       <input type="text" placeholder="Username" value={username} onChange={(e)=>setUsername(e.target.value)}/>
       <span className="inputError">{usernameError}</span>
-      
+
       <input type="password" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)}/>
       <span className="inputError">{passwordError}</span>
 
