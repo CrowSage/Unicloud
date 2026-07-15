@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../context/AuthContext"
-import { API_URL } from "../config";
 
-export default function AccountsList() {
+export default function AccountsList({ onSelect, selectedAccount }) {
 
   // Loading Context
-  const { user } = useAuth()
+  const { user, apiRequest } = useAuth()
 
   // States
   const [userAccounts, setUserAccounts] = useState([])
@@ -15,20 +14,24 @@ export default function AccountsList() {
 
     async function fetchAccounts() {
 
-      const response = await fetch(`${API_URL}/services/list/`, {
-        method: "GET",
-        headers: `Bearer ${userAccounts.accessToken}`
-      })
-
+      const response = await apiRequest("services/list/", { method: "GET" })
       const data = await response.json()
       setUserAccounts(data.services)
 
-
     }
 
+    fetchAccounts()
+  }, [])
 
-  })
 
+  return (
+    <ul className="accountList">{userAccounts.map((acc) => (
 
-  return <h1>Accounts List</h1>;
+      <li className={selectedAccount == acc.account_id ? "selected accountItem" : "accountItem"} key={acc.account_id} onClick={() => { onSelect(acc.account_id) }}>
+        <span>{acc.name}</span><br />
+        <span>{acc.account_id}</span>
+        <hr />
+      </li>
+    ))}</ul>
+  );
 }

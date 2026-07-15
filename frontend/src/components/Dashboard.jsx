@@ -1,20 +1,23 @@
-import { useState } from "react";
-import { API_URL } from "../config"
+import AccountsList from "./AccountsList"
 import { useAuth } from "../context/AuthContext"
-
-
+import { useState } from "react"
 
 
 export default function Dashboard() {
 
-  // Loading Context 
-  const { user } = useAuth()
-
-
   // States
-
+  const [selectedAccount, setSelectedAccount] = useState("")
 
 
   // Functions
+  function onSelect(account_id) {
+    setSelectedAccount(account_id)
+  }
+
+
+
+  return (
+    <AccountsList selectedAccount={selectedAccount} onSelect={onSelect} />
+  )
 
 }

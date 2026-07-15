@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
 import { API_URL } from "../config";
-import { configs } from "eslint-plugin-react-hooks";
 
 export const AuthContext = createContext()
 
