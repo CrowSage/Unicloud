@@ -156,10 +156,10 @@ def google_files(request):
     response = requests.get(
         "https://www.googleapis.com/drive/v3/files",
         headers={"Authorization": f"Bearer {access_token}"},
-        params={"fields": "files(id,name,mimeType)"},
+        params={"fields": "files(id,name,mimeType)", "q": "'root' in parents"},
     )
 
-    return Response(response.json())
+    return Response(response.json()["files"])
 
 
 # DROPBOX CONNECTION
@@ -280,5 +280,6 @@ def dropbox_files(request):
     data = {"path": ""}
 
     response = requests.post(url, headers=headers, json=data)
+    entries = response.json()["entries"]
 
-    return Response(response.json())
+    return Response(entries)
