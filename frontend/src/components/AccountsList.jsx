@@ -27,7 +27,7 @@ export default function AccountsList({ onSelect, selectedAccount }) {
   return (
     <ul className="accountList">{userAccounts.map((acc) => (
 
-      <li className={selectedAccount == acc.account_id ? "selected accountItem" : "accountItem"} key={acc.account_id} onClick={() => { onSelect(acc.account_id) }}>
+      <li className={selectedAccount == acc.account_id ? "selected accountItem" : "accountItem"} key={acc.account_id} onClick={() => { onSelect(acc.account_id, acc.name) }}>
         <span>{acc.name}</span><br />
         <span>{acc.account_id}</span>
         <hr />

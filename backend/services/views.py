@@ -143,6 +143,7 @@ def google_files(request):
 
     user = request.user
     account_id = request.GET.get("account_id")
+    path = request.GET.get("path", "root")
 
     try:
         cs = ConnectedService.objects.get(
@@ -156,7 +157,7 @@ def google_files(request):
     response = requests.get(
         "https://www.googleapis.com/drive/v3/files",
         headers={"Authorization": f"Bearer {access_token}"},
-        params={"fields": "files(id,name,mimeType)", "q": "'root' in parents"},
+        params={"fields": "files(id,name,mimeType)", "q": f"'{path}' in parents"},
     )
 
     return Response(response.json()["files"])
@@ -261,6 +262,11 @@ def dropbox_files(request):
 
     user = request.user
     account_id = request.GET.get("account_id")
+    path = request.GET.get("path", "")
+
+    # Translating root value for path as "" cause thats what dropbox consider as root
+    if path == "root":
+        path = ""
 
     try:
         cs = ConnectedService.objects.get(
@@ -277,7 +283,7 @@ def dropbox_files(request):
         "Content-Type": "application/json",
     }
 
-    data = {"path": ""}
+    data = {"path": path}
 
     response = requests.post(url, headers=headers, json=data)
     entries = response.json()["entries"]

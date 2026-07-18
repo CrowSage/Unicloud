@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans+JP:wght@100..900&display=swap');
+
 @font-face {
     font-family: "Recia";
     src:
@@ -7,10 +9,10 @@
 
 
 :root {
-    --bg: hsl(0, 0%, 5%);
+    --bg: hsl(240, 5%, 7%);
     --fg: hsl(0, 0%, 95%);
-    --accent: hsl(217 91% 25%);
-    --border: hsl(0, 0%, 50%);
+    --accent: #eac41d;
+    --border: hsla(0, 0%, 100%, 0.5);
 }
 
 * {
@@ -18,7 +20,7 @@
     padding: 0;
 
     box-sizing: border-box;
-    font-family: "Recia";
+    font-family: "Noto Sans JP";
 }
 
 
@@ -29,13 +31,22 @@ body {
 
 }
 
+/* Form CSS */
+
 h1 {
     font-weight: 500;
     letter-spacing: -1%;
     line-height: 100%;
+
+    font-size: 40px;
 }
 
-/* Form CSS */
+.subHeading {
+    font-size: 14px;
+    color: gray;
+    margin-top: 8px;
+}
+
 .authFormContainer {
     display: flex;
     align-items: center;
@@ -43,18 +54,19 @@ h1 {
     flex-direction: column;
 
     width: 100vw;
-    height: 70vh;
+    height: 100vh;
 }
 
 .authForm {
     display: flex;
     flex-direction: column;
+    align-items: center;
+
 
     width: 320px;
 
     gap: 8px;
-    margin-top: 50px;
-
+    margin-top: 80px;
 }
 
 .authForm input {
@@ -63,35 +75,63 @@ h1 {
 
     font-size: 18px;
 
-    padding: 4px 8px;
+    padding: 8px 16px;
 
-    border: 1px solid var(--accent);
-    border-radius: 4px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
 
-    margin-top: 20px;
+    width: 100%;
+
+}
+
+.authForm input::placeholder {
+    color: var(--border);
+}
+
+.authLink {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: hsl(0, 0%, 70%);
+    width: 100%;
+
+    margin-top: 16px;
+}
+
+.authLink .link {
+    color: var(--accent);
+    margin: 0px 5px;
 }
 
 .authForm button {
     background-color: var(--accent);
-    color: var(--fg);
+    color: var(--bg);
 
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    border-radius: 6px;
+    border: none;
 
 
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 600;
 
     margin-top: 20px;
-    padding: 4px 8px;
+    padding: 8px 16px;
 
     cursor: pointer;
 }
 
 .inputError {
-    color: hsl(0, 79%, 51%);
+    color: hsl(0, 67%, 52%);
+    background-color: #2c1313bb;
+    border-left: 5px solid #ef4444;
     font-size: 14px;
-    padding: 0px 5px;
+    padding: 8px 16px;
 
+}
+
+.authForm input.wrongInput {
+    border: 1px solid hsl(0, 67%, 52%);
+    background-color: #2c131333;
 }
 
 .selected {
